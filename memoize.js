@@ -1,17 +1,36 @@
 const fn = (n) => {
   let s = 0;
   for (let i = 0; i < n; i++) {
-    s += n;
+    s += i;
   }
   return s;
 };
 
 const memoize = function (cb) {
   let cache = {};
-  console.log(arguments);
-  return function () {};
+
+  return function () {
+    const num = arguments[0];
+    if (cache[num]) {
+      return cache[num];
+    } else {
+      const s = cb(num);
+      cache[num] = s;
+      return s;
+    }
+  };
 };
 
-const res = memoize(fn(100));
+const res = memoize(fn);
 
-console.log(fn(199));
+console.time();
+console.log(res(1000000));
+console.timeEnd();
+
+console.time();
+console.log(res(1000000));
+console.timeEnd();
+
+console.time();
+console.log(res(1000000));
+console.timeEnd();
